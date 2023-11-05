@@ -166,7 +166,11 @@ const AllProducts = () => {
                           item.product.expiry_threshhold && (
                           <td className="text-green-500">
                             <span className="text-green-500 p-1 px-2 bg-green-300/40 rounded-md text-sm">
-                              {item.product.days_until_expiry} Days Left
+                              {item.product.days_until_expiry}{" "}
+                              {item.product.days_until_expiry === 1
+                                ? "Day"
+                                : "Days"}{" "}
+                              Left
                             </span>
                           </td>
                         )}
@@ -175,7 +179,11 @@ const AllProducts = () => {
                           item.product.days_until_expiry >= 0 && (
                             <td className="">
                               <span className="text-yellow-500 p-1 bg-yellow-300/40 rounded-md text-sm">
-                                {item.product.days_until_expiry} Days Left
+                                {item.product.days_until_expiry}{" "}
+                                {item.product.days_until_expiry === 1
+                                  ? "Day"
+                                  : "Days"}{" "}
+                                Left
                               </span>
                             </td>
                           )}
@@ -183,14 +191,23 @@ const AllProducts = () => {
                         {item.product.days_until_expiry < 0 && (
                           <td className="">
                             <span className="text-red-500 p-1 bg-red-300/40 rounded-md text-sm">
-                              {item.product.days_until_expiry} Days Left
+                              {item.product.days_until_expiry}{" "}
+                              {item.product.days_until_expiry === 1
+                                ? "Day"
+                                : "Days"}{" "}
+                              Left
                             </span>
                           </td>
                         )}
                         <td>{item.product.name}</td>
                         <td>{item.product.batch_no}</td>
                         <td>{item.product.expiry_date.split("T")[0]}</td>
-                        <td>{item.product.expiry_threshhold} Days</td>
+                        <td>
+                          {item.product.expiry_threshhold}{" "}
+                          {item.product.expiry_threshhold === 1
+                            ? "Day"
+                            : "Days"}{" "}
+                        </td>
                         {/* <td>{item.product.days_until_expiry} Days</td> */}
                         <td>
                           {item.product.quantity} {item.product.unit}(s)

@@ -151,8 +151,14 @@ const AllProducts = () => {
                         <td className="text-black">{item.name}</td>
                         <td>{item.batch_no}</td>
                         <td>{item.expiry_date.split("T")[0]}</td>
-                        <td>{item.expiry_threshhold} Days</td>
-                        <td>{item.days_until_expiry} Days</td>
+                        <td>
+                          {item.expiry_threshhold}{" "}
+                          {item.expiry_threshhold === 1 ? "Day" : "Days"}
+                        </td>
+                        <td>
+                          {item.days_until_expiry}{" "}
+                          {item.days_until_expiry === 1 ? "Day" : "Days"}
+                        </td>
                         <td>
                           {item.quantity} {item.unit}(s)
                         </td>
