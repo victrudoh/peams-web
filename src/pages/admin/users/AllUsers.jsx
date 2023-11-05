@@ -1,11 +1,25 @@
 import React, { useContext, useEffect, useState } from "react";
 import AppContext from "../../../context/AppContext";
+import AddUser from "./AddUser";
+import EditUser from "./EditUser";
 
 const AllUsers = () => {
-  const { allUsers } = useContext(AppContext);
+  const {
+    allUsers,
+    setUserId,
+    showAddUsers,
+    showEditUsers,
+    setShowAddUsers,
+    setShowEditUsers,
+  } = useContext(AppContext);
   const [filtered, setFiltered] = useState([]);
 
   let sn = 1;
+
+  const editHandler = (id) => {
+    setUserId(id);
+    setShowEditUsers(true);
+  };
 
   // SearchBar Handler
   const onSearchChangeHandler = async (e) => {
@@ -29,6 +43,8 @@ const AllUsers = () => {
 
   return (
     <>
+      {showAddUsers && <AddUser />}
+      {showEditUsers && <EditUser />}
       {/* TOP */}
       <div className="w-full flex justify-between items-center font-sans pb-2 border-b border-black-ish/20">
         {/* left */}
@@ -72,7 +88,10 @@ const AllUsers = () => {
             onChange={onSearchChangeHandler}
           />
         </div>
-        <div className="p-2 bg-primary-color rounded-md text-white-ish flex gap-1 items-center font-semibold cursor-pointer hover:bg-primary-color/80">
+        <div
+          onClick={() => setShowAddUsers(true)}
+          className="p-2 bg-primary-color rounded-md text-white-ish flex gap-1 items-center font-semibold cursor-pointer hover:bg-primary-color/80"
+        >
           <svg
             width="20"
             height="20"
@@ -115,7 +134,7 @@ const AllUsers = () => {
                       <tr
                         key={i}
                         className="h-10 cursor-pointer text-gray-500 hover:bg-off-teal py-2 border-b-2 border-gray-300/40"
-                        // onClick={() => gotoStudent(item._id)}
+                        onClick={() => editHandler(item._id)}
                       >
                         <td>{sn++}</td>
                         <td>{item.firstname}</td>

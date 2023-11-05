@@ -31,6 +31,10 @@ export const AppProvider = ({ children }) => {
 
   // USERS
   const [allUsers, setAllUsers] = useState();
+  const [oneUser, setOneUser] = useState();
+  const [userId, setUserId] = useState();
+  const [showAddUsers, setShowAddUsers] = useState();
+  const [showEditUsers, setShowEditUsers] = useState();
 
   // CATEGORIES
   const [allCategories, setAllCategories] = useState();
@@ -76,6 +80,33 @@ export const AppProvider = ({ children }) => {
       }
       error("Something went wrong!.");
       console.log("~ activeUser ~ error", err);
+    }
+  };
+
+  // Get One User
+  const getOneUser = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        // `https://peams-api.onrender.com/api/products`,
+        `http://localhost:3033/api/users/one?id=${userId}`,
+        {
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      );
+      // console.log(
+      //   "🚀 ~ file: AppContext.jsx:139 ~ getOneUser ~ response:",
+      //   response
+      // );
+      setLoading(false);
+      setOneUser(response.data.data);
+    } catch (err) {
+      console.log("🚀 ~ file: AppContext.jsx:143 ~ getOneUser ~ err:", err);
+      setLoading(false);
+      error("Couldn't fetch product");
+      // error(err.response.data?.error);
     }
   };
 
@@ -421,24 +452,35 @@ export const AppProvider = ({ children }) => {
     // getAllStudents();
   }, []);
 
+  // Category
   useEffect(() => {
     if (categoryId) {
       getOneCategory();
     }
   }, [categoryId]);
 
+  // Product
   useEffect(() => {
     if (productId) {
       getOneProduct();
     }
   }, [productId]);
 
+  // User
+  useEffect(() => {
+    if (userId) {
+      getOneUser();
+    }
+  }, [userId]);
+
+  // Shelf
   useEffect(() => {
     if (shelfId) {
       getOneShelf();
     }
   }, [shelfId]);
 
+  // Notification
   useEffect(() => {
     if (allNotifications) {
       checkReadNotifications();
@@ -482,10 +524,18 @@ export const AppProvider = ({ children }) => {
         setShowEditProducts,
 
         // Users
+        userId,
+        oneUser,
         allUsers,
+        showAddUsers,
+        showEditUsers,
 
+        setUserId,
+        setOneUser,
         setAllUsers,
         getAllUsers,
+        setShowAddUsers,
+        setShowEditUsers,
 
         // Categories
         categoryId,
