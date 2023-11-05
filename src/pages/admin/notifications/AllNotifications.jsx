@@ -19,7 +19,7 @@ const AllProducts = () => {
     try {
       const response = await axios.get(
         // `https://peams-api.onrender.com/api/products`,
-        `http://localhost:3033/api/notifications/read?id=${id}`,
+        `https://peams-api.onrender.com/api/notifications/read?id=${id}`,
         {
           headers: {
             "content-type": "application/json",
@@ -46,7 +46,7 @@ const AllProducts = () => {
     try {
       const response = await axios.get(
         // `https://peams-api.onrender.com/api/products`,
-        `http://localhost:3033/api/notifications/read-all?id=${id}`,
+        `https://peams-api.onrender.com/api/notifications/read-all?id=${id}`,
         {
           headers: {
             "content-type": "application/json",
@@ -73,7 +73,7 @@ const AllProducts = () => {
     try {
       const response = await axios.delete(
         // `https://peams-api.onrender.com/api/products`,
-        `http://localhost:3033/api/notifications/delete?id=${id}`,
+        `https://peams-api.onrender.com/api/notifications/delete?id=${id}`,
         {
           headers: {
             "content-type": "application/json",

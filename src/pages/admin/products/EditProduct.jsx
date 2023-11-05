@@ -35,7 +35,7 @@ const EditProduct = () => {
     try {
       const response = await axios.put(
         // `https://peams-api.onrender.com/api/products/add`,
-        `http://localhost:3033/api/products/edit?id=${productId}`,
+        `https://peams-api.onrender.com/api/products/edit?id=${productId}`,
         productDetails,
         {
           headers: { "content-type": "application/json" },
@@ -63,7 +63,7 @@ const EditProduct = () => {
       setLoading(true);
       const response = await axios.delete(
         // `https://peams-api.onrender.com/api/products`,
-        `http://localhost:3033/api/products/delete?id=${productId}`,
+        `https://peams-api.onrender.com/api/products/delete?id=${productId}`,
         {
           headers: {
             "content-type": "application/json",

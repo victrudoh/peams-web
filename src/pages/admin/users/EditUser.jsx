@@ -16,11 +16,11 @@ const EditUser = () => {
   } = useContext(AppContext);
 
   const [userDetails, setUserDetails] = useState({
-    firstname: oneUser.firstname,
-    lastname: oneUser.lastname,
-    email: oneUser.email,
-    username: oneUser.username,
-    password: oneUser.password,
+    firstname: oneUser?.firstname,
+    lastname: oneUser?.lastname,
+    email: oneUser?.email,
+    username: oneUser?.username,
+    password: oneUser?.password,
   });
 
   const editUserHandler = async (e) => {
@@ -30,7 +30,7 @@ const EditUser = () => {
     try {
       const response = await axios.put(
         // `https://peams-api.onrender.com/api/products/add`,
-        `http://localhost:3033/api/users/edit?id=${userId}`,
+        `https://peams-api.onrender.com/api/users/edit?id=${userId}`,
         userDetails,
         {
           headers: { "content-type": "application/json" },
@@ -59,7 +59,7 @@ const EditUser = () => {
       setLoading(true);
       const response = await axios.delete(
         // `https://peams-api.onrender.com/api/products`,
-        `http://localhost:3033/api/users/delete?id=${userId}`,
+        `https://peams-api.onrender.com/api/users/delete?id=${userId}`,
         {
           headers: {
             "content-type": "application/json",

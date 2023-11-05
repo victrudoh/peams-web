@@ -36,7 +36,7 @@ const AllCategories = () => {
     try {
       const response = await axios.delete(
         // `https://peams-api.onrender.com/api/products`,
-        `http://localhost:3033/api/categories/delete?id=${id}`,
+        `https://peams-api.onrender.com/api/categories/delete?id=${id}`,
         {
           headers: {
             "content-type": "application/json",

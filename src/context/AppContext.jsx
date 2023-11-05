@@ -89,7 +89,7 @@ export const AppProvider = ({ children }) => {
       setLoading(true);
       const response = await axios.get(
         // `https://peams-api.onrender.com/api/products`,
-        `http://localhost:3033/api/users/one?id=${userId}`,
+        `https://peams-api.onrender.com/api/users/one?id=${userId}`,
         {
           headers: {
             "content-type": "application/json",
@@ -115,7 +115,7 @@ export const AppProvider = ({ children }) => {
     try {
       const response = await axios.get(
         // `https://peams-api.onrender.com/api/products`,
-        `http://localhost:3033/api/users`,
+        `https://peams-api.onrender.com/api/users`,
         {
           headers: {
             "content-type": "application/json",
@@ -140,7 +140,7 @@ export const AppProvider = ({ children }) => {
     try {
       const response = await axios.get(
         // `https://peams-api.onrender.com/api/products`,
-        `http://localhost:3033/api/products`,
+        `https://peams-api.onrender.com/api/products`,
         {
           headers: {
             "content-type": "application/json",
@@ -168,7 +168,7 @@ export const AppProvider = ({ children }) => {
       setLoading(true);
       const response = await axios.get(
         // `https://peams-api.onrender.com/api/products`,
-        `http://localhost:3033/api/products/one?id=${productId}`,
+        `https://peams-api.onrender.com/api/products/one?id=${productId}`,
         {
           headers: {
             "content-type": "application/json",
@@ -195,7 +195,7 @@ export const AppProvider = ({ children }) => {
     try {
       const response = await axios.get(
         // `https://peams-api.onrender.com/api/products`,
-        `http://localhost:3033/api/categories`,
+        `https://peams-api.onrender.com/api/categories`,
         {
           headers: {
             "content-type": "application/json",
@@ -222,7 +222,7 @@ export const AppProvider = ({ children }) => {
     try {
       const response = await axios.get(
         // `https://peams-api.onrender.com/api/products`,
-        `http://localhost:3033/api/products/by-category?categoryId=${id}`,
+        `https://peams-api.onrender.com/api/products/by-category?categoryId=${id}`,
         {
           headers: {
             "content-type": "application/json",
@@ -250,7 +250,7 @@ export const AppProvider = ({ children }) => {
       setLoading(true);
       const response = await axios.get(
         // `https://peams-api.onrender.com/api/products`,
-        `http://localhost:3033/api/categories/one?id=${categoryId}`,
+        `https://peams-api.onrender.com/api/categories/one?id=${categoryId}`,
         {
           headers: {
             "content-type": "application/json",
@@ -277,7 +277,7 @@ export const AppProvider = ({ children }) => {
     try {
       const response = await axios.get(
         // `https://peams-api.onrender.com/api/products`,
-        `http://localhost:3033/api/shelves`,
+        `https://peams-api.onrender.com/api/shelves`,
         {
           headers: {
             "content-type": "application/json",
@@ -301,7 +301,7 @@ export const AppProvider = ({ children }) => {
     try {
       const response = await axios.get(
         // `https://peams-api.onrender.com/api/products`,
-        `http://localhost:3033/api/products/by-shelf?shelfId=${id}`,
+        `https://peams-api.onrender.com/api/products/by-shelf?shelfId=${id}`,
         {
           headers: {
             "content-type": "application/json",
@@ -329,7 +329,7 @@ export const AppProvider = ({ children }) => {
       setLoading(true);
       const response = await axios.get(
         // `https://peams-api.onrender.com/api/products`,
-        `http://localhost:3033/api/shelves/one?id=${shelfId}`,
+        `https://peams-api.onrender.com/api/shelves/one?id=${shelfId}`,
         {
           headers: {
             "content-type": "application/json",
@@ -356,7 +356,7 @@ export const AppProvider = ({ children }) => {
     try {
       const response = await axios.get(
         // `https://peams-api.onrender.com/api/products`,
-        `http://localhost:3033/api/notifications`,
+        `https://peams-api.onrender.com/api/notifications`,
         {
           headers: {
             "content-type": "application/json",
@@ -392,13 +392,13 @@ export const AppProvider = ({ children }) => {
     const lagosTimeZoneOffset = 60; // Lagos is UTC+1
     const now = new Date(new Date().getTime() + lagosTimeZoneOffset * 60000);
 
-    // Check if the current time is between 8 am and 11 am
+    // Check if the current time is between 8 am and 12 pm
     const currentHour = now.getUTCHours();
 
-    if (currentHour >= 4 && currentHour < 11) {
+    if (currentHour >= 8 && currentHour < 12) {
       try {
         const response = await axios.get(
-          `http://localhost:3033/api/products/expiring`,
+          `https://peams-api.onrender.com/api/products/expiring`,
           {
             headers: {
               "content-type": "application/json",
@@ -427,23 +427,26 @@ export const AppProvider = ({ children }) => {
   // ****Fetch Everything ****//
   useEffect(() => {
     setToken(localStorage.getItem("token"));
+
     getActiveUser();
 
-    // Products
-    getAllProducts();
+    if (activeUser) {
+      // Products
+      getAllProducts();
 
-    // Users
-    getAllUsers();
+      // Users
+      getAllUsers();
 
-    // Categories
-    getAllCategories();
+      // Categories
+      getAllCategories();
 
-    // Shelves
-    getAllShelves();
+      // Shelves
+      getAllShelves();
 
-    // Notifications
-    getAllNotifications();
-    getExpiringProducts();
+      // Notifications
+      getAllNotifications();
+      getExpiringProducts();
+    }
 
     // Test
     // getOneTest();

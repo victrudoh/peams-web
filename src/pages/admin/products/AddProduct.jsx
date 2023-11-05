@@ -37,7 +37,7 @@ const AddProduct = () => {
     try {
       const response = await axios.post(
         // `https://peams-api.onrender.com/api/products/add`,
-        `http://localhost:3033/api/products/add`,
+        `https://peams-api.onrender.com/api/products/add`,
         productDetails,
         {
           headers: { "content-type": "application/json" },

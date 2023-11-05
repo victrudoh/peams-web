@@ -25,7 +25,7 @@ const EditCategory = () => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `http://localhost:3033/api/categories/edit?id=${categoryId}`,
+        `https://peams-api.onrender.com/api/categories/edit?id=${categoryId}`,
         categoryDetails,
         {
           headers: { "content-type": "application/json" },

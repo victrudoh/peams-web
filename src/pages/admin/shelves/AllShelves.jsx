@@ -36,7 +36,7 @@ const AllShelves = () => {
     try {
       const response = await axios.delete(
         // `https://peams-api.onrender.com/api/products`,
-        `http://localhost:3033/api/shelves/delete?id=${id}`,
+        `https://peams-api.onrender.com/api/shelves/delete?id=${id}`,
         {
           headers: {
             "content-type": "application/json",

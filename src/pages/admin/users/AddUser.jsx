@@ -24,7 +24,7 @@ const AddUser = () => {
     try {
       const response = await axios.post(
         // `https://peams-api.onrender.com/api/products/add`,
-        `http://localhost:3033/api/users/add`,
+        `https://peams-api.onrender.com/api/users/add`,
         userDetails,
         {
           headers: { "content-type": "application/json" },

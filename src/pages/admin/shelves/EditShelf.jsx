@@ -26,7 +26,7 @@ const EditProduct = () => {
     try {
       const response = await axios.put(
         // `https://peams-api.onrender.com/api/products/add`,
-        `http://localhost:3033/api/shelves/edit?id=${shelfId}`,
+        `https://peams-api.onrender.com/api/shelves/edit?id=${shelfId}`,
         shelfDetails,
         {
           headers: { "content-type": "application/json" },

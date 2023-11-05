@@ -15,17 +15,18 @@ const Login = () => {
 
   const Loginhandler = async (e) => {
     setLoading(true);
-    console.log("LoginDetails", loginDetails);
+    // console.log("LoginDetails", loginDetails);
     e.preventDefault();
     try {
       const response = await axios.post(
         "https://peams-api.onrender.com/api/auth/login",
+        // "http://localhost:3033/api/auth/login",
         loginDetails,
         {
           headers: { "content-type": "application/json" },
         }
       );
-      // console.log("response", response);
+      console.log("response", response);
       setLoading(false);
       const token = response.data.data.loginDetails.token;
       const userId = response.data.data.loginDetails.user._id;
@@ -50,10 +51,6 @@ const Login = () => {
       ...loginDetails,
       [e.target.name]: e.target.value,
     }));
-    console.log(
-      "🚀 ~ file: AddCourse.jsx:53 ~ setLoginDetails ~ LoginDetails:",
-      loginDetails
-    );
   };
 
   return (
