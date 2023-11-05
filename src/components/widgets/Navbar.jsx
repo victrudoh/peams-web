@@ -3,7 +3,7 @@ import { useContext } from "react";
 import AppContext from "../../context/AppContext";
 
 const Navbar = () => {
-  const { navbarActive, setNavbarActive, getAllProducts } =
+  const { navbarActive, setNavbarActive, getAllProducts, unreadNotifications } =
     useContext(AppContext);
 
   const setProducts = () => {
@@ -136,7 +136,9 @@ const Navbar = () => {
               fill="#645AFF"
             />
           </svg>
-          <div className="p-1 bg-error-color rounded-full absolute top-0 right-0 animate-ping"></div>
+          {unreadNotifications && (
+            <div className="p-1 bg-error-color rounded-full absolute top-0 right-0 animate-ping"></div>
+          )}
         </div>
         Notifications
       </NavLink>

@@ -48,6 +48,7 @@ export const AppProvider = ({ children }) => {
 
   // NOTIFICATIONS
   const [allNotifications, setAllNotifications] = useState();
+  const [unreadNotifications, setUnreadNotifications] = useState(false);
 
   // **************** //
   //*** FUNCTIONS ***//
@@ -143,10 +144,10 @@ export const AppProvider = ({ children }) => {
           },
         }
       );
-      console.log(
-        "🚀 ~ file: AppContext.jsx:139 ~ getOneProduct ~ response:",
-        response
-      );
+      // console.log(
+      //   "🚀 ~ file: AppContext.jsx:139 ~ getOneProduct ~ response:",
+      //   response
+      // );
       setLoading(false);
       setOneProduct(response.data.data);
     } catch (err) {
@@ -170,10 +171,10 @@ export const AppProvider = ({ children }) => {
           },
         }
       );
-      console.log(
-        "🚀 ~ file: AppContext.jsx:166 ~ getAllCategories ~ response:",
-        response
-      );
+      // console.log(
+      //   "🚀 ~ file: AppContext.jsx:166 ~ getAllCategories ~ response:",
+      //   response
+      // );
       setAllCategories(response.data.data);
     } catch (err) {
       console.log(
@@ -252,10 +253,10 @@ export const AppProvider = ({ children }) => {
           },
         }
       );
-      console.log(
-        "🚀 ~ file: AppContext.jsx:236 ~ getAllShelves ~ response:",
-        response
-      );
+      // console.log(
+      //   "🚀 ~ file: AppContext.jsx:236 ~ getAllShelves ~ response:",
+      //   response
+      // );
       setAllShelves(response.data.data);
     } catch (err) {
       console.log("🚀 ~ file: AppContext.jsx:239 ~ getAllShelves ~ err:", err);
@@ -276,10 +277,10 @@ export const AppProvider = ({ children }) => {
           },
         }
       );
-      console.log(
-        "🚀 ~ file: AppContext.jsx:272 ~ getProductsByShelf ~ response:",
-        response
-      );
+      // console.log(
+      //   "🚀 ~ file: AppContext.jsx:272 ~ getProductsByShelf ~ response:",
+      //   response
+      // );
       setAllProducts(response.data.data);
     } catch (err) {
       console.log(
@@ -304,10 +305,10 @@ export const AppProvider = ({ children }) => {
           },
         }
       );
-      console.log(
-        "🚀 ~ file: AppContext.jsx:304 ~ getOneShelf ~ response:",
-        response
-      );
+      // console.log(
+      //   "🚀 ~ file: AppContext.jsx:304 ~ getOneShelf ~ response:",
+      //   response
+      // );
       setLoading(false);
       setOneShelf(response.data.data);
     } catch (err) {
@@ -335,7 +336,7 @@ export const AppProvider = ({ children }) => {
       //   "🚀 ~ file: AppContext.jsx:334 ~ getAllNotifications ~ response:",
       //   response
       // );
-      setAllNotifications(response.data.data);
+      setAllNotifications(response.data.data.reverse());
     } catch (err) {
       console.log(
         "🚀 ~ file: AppContext.jsx:337 ~ getAllNotifications ~ err:",
@@ -346,12 +347,45 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  // check for unread notifications
   const checkReadNotifications = async () => {
-    const hasRead = await allNotifications?.some((item) => item.read === true);
-    console.log(
-      "🚀 ~ file: AppContext.jsx:340 ~ getAllNotifications ~ hasRead:",
-      hasRead
-    );
+    const hasRead = await allNotifications?.some((item) => {
+      return item.read === false;
+    });
+    setUnreadNotifications(hasRead);
+  };
+
+  // check for expiring/expired products
+  const getExpiringProducts = async () => {
+    // Create a Date object with the current time in Lagos (UTC+1 with daylight saving time)
+    const lagosTimeZoneOffset = 60; // Lagos is UTC+1
+    const now = new Date(new Date().getTime() + lagosTimeZoneOffset * 60000);
+
+    // Check if the current time is between 8 am and 11 am
+    const currentHour = now.getUTCHours();
+
+    if (currentHour >= 4 && currentHour < 11) {
+      try {
+        const response = await axios.get(
+          `http://localhost:3033/api/products/expiring`,
+          {
+            headers: {
+              "content-type": "application/json",
+            },
+          }
+        );
+        // Your code to handle the response
+        getAllNotifications();
+      } catch (err) {
+        console.log("Error:", err);
+        error("Couldn't fetch products");
+        error(err.response?.data?.error);
+      }
+    } else {
+      console.log(
+        "Function is not executed because it's outside the specified time range."
+      );
+    }
   };
 
   /* ***********
@@ -378,6 +412,7 @@ export const AppProvider = ({ children }) => {
 
     // Notifications
     getAllNotifications();
+    getExpiringProducts();
 
     // Test
     // getOneTest();
@@ -484,9 +519,11 @@ export const AppProvider = ({ children }) => {
 
         // Notifications
         allNotifications,
+        unreadNotifications,
 
         setAllNotifications,
         getAllNotifications,
+        setUnreadNotifications,
 
         /* ***********
          *********

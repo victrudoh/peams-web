@@ -4,13 +4,12 @@ import { error, info, success } from "../../../helpers/Alert";
 import axios from "axios";
 
 const AllProducts = () => {
-  const { setProductId, allNotifications, getAllNotifications } =
-    useContext(AppContext);
+  const { allNotifications, getAllNotifications } = useContext(AppContext);
 
-  console.log(
-    "🚀 ~ file: AllNotifications.jsx:6 ~ AllProducts ~ allNotifications:",
-    allNotifications
-  );
+  // console.log(
+  //   "🚀 ~ file: AllNotifications.jsx:6 ~ AllProducts ~ allNotifications:",
+  //   allNotifications
+  // );
 
   const [filtered, setFiltered] = useState([]);
 
@@ -32,6 +31,33 @@ const AllProducts = () => {
       //   response
       // );
       info("Notification marked as read");
+      getAllNotifications();
+    } catch (err) {
+      console.log(
+        "🚀 ~ file: AllNotifications.jsx:37 ~ readHandler ~ err:",
+        err
+      );
+      error(err.response.data?.message);
+      error(err.response.data?.error);
+    }
+  };
+
+  const readAllHandler = async (id) => {
+    try {
+      const response = await axios.get(
+        // `https://peams-api.onrender.com/api/products`,
+        `http://localhost:3033/api/notifications/read-all?id=${id}`,
+        {
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      );
+      // console.log(
+      //   "🚀 ~ file: AppContext.jsx:161 ~ getProductsByShelf ~ response:",
+      //   response
+      // );
+      info("All notifications marked as read");
       getAllNotifications();
     } catch (err) {
       console.log(
@@ -78,7 +104,7 @@ const AllProducts = () => {
   return (
     <>
       {/* TOP */}
-      <div className="w-full flex justify-between items-center font-sans pb-2 border-b border-black-ish/20">
+      <div className="w-full px-2 flex justify-between items-center font-sans pb-2 border-b border-black-ish/20">
         {/* left */}
         <div className="flex flex-col items-start p-2 gap-2 justify-between">
           {/* left top */}
@@ -88,6 +114,13 @@ const AllProducts = () => {
             </span>
           </div>
         </div>
+        {/* Right */}
+        <span
+          onClick={() => readAllHandler()}
+          className="font-light border-b-error-color border-b-2 cursor-pointer text-error-color/70 hover:text-primary-color hover:border-b-primary-color"
+        >
+          Mark all as Read
+        </span>
       </div>
       <div className="min-w-full flex flex-col items-start">
         {/* <div className="bg-green-400 p-4 h-12 w-full">Top</div> */}
